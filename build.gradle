@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'java'
+
+version = project.mod_version
+group = project.maven_group
+archivesBaseName = project.archives_base_name
+
+sourceCompatibility = targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    runs {
+        client { workingDirectory project.file('run') }
+        server { workingDirectory project.file('run') }
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${loader_version}"
+}
+
+jar {
+    manifest {
+        attributes([
+            'Specification-Title': project.archives_base_name,
+            'Specification-Version': project.mod_version,
+            'Implementation-Title': project.archives_base_name,
+            'Implementation-Version': project.mod_version
+        ])
+    }
+}
